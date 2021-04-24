@@ -6,6 +6,10 @@ interface IUserCreate {
   email: string;
 }
 
+interface IUserFindByEmail {
+  email: string;
+}
+
 class UsersService {
   private usersRepository: Repository<User>;
 
@@ -19,6 +23,11 @@ class UsersService {
 
     const user = this.usersRepository.create({ email });
     await this.usersRepository.save(user);
+    return user;
+  }
+
+  async findByEmail({ email }: IUserFindByEmail) {
+    const user = await this.usersRepository.findOne({ email });
     return user;
   }
 }
